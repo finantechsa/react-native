@@ -1143,6 +1143,7 @@
 		59EDBCC61FDF4E55003573DE /* (null) in Copy Headers */ = {isa = PBXBuildFile; };
 		59EDBCC71FDF4E55003573DE /* RCTScrollView.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 59EDBCA31FDF4E0C003573DE /* RCTScrollView.h */; };
 		59EDBCC81FDF4E55003573DE /* RCTScrollViewManager.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 59EDBCA51FDF4E0C003573DE /* RCTScrollViewManager.h */; };
+		5FA7C0A62163C7CB006ABD58 /* RCTSRWebSocket.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 3D7BFD2C1EA8E3FA008DFB7A /* RCTSRWebSocket.h */; };
 		657734841EE834C900A0E9EA /* RCTInspectorDevServerHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 657734821EE834C900A0E9EA /* RCTInspectorDevServerHelper.h */; };
 		657734851EE834C900A0E9EA /* RCTInspectorDevServerHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 657734831EE834C900A0E9EA /* RCTInspectorDevServerHelper.mm */; };
 		657734861EE834D900A0E9EA /* RCTInspectorDevServerHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 657734831EE834C900A0E9EA /* RCTInspectorDevServerHelper.mm */; };
@@ -1592,6 +1593,7 @@
 			dstPath = include/React;
 			dstSubfolderSpec = 16;
 			files = (
+				5FA7C0A62163C7CB006ABD58 /* RCTSRWebSocket.h in Copy Headers */,
 				39C50FF92046EACF00CEE534 /* RCTVersion.h in Copy Headers */,
 				591F78DE202ADB8F004A668C /* RCTLayout.h in Copy Headers */,
 				59EDBCBD1FDF4E43003573DE /* RCTScrollableProtocol.h in Copy Headers */,

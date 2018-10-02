@@ -18,23 +18,23 @@
 #import <Security/SecCertificate.h>
 
 typedef NS_ENUM(unsigned int, RCTSRReadyState) {
-    RCTSR_CONNECTING   = 0,
-    RCTSR_OPEN         = 1,
-    RCTSR_CLOSING      = 2,
-    RCTSR_CLOSED       = 3,
+  RCTSR_CONNECTING   = 0,
+  RCTSR_OPEN         = 1,
+  RCTSR_CLOSING      = 2,
+  RCTSR_CLOSED       = 3,
 };
 
 typedef NS_ENUM(NSInteger, RCTSRStatusCode) {
-    RCTSRStatusCodeNormal = 1000,
-    RCTSRStatusCodeGoingAway = 1001,
-    RCTSRStatusCodeProtocolError = 1002,
-    RCTSRStatusCodeUnhandledType = 1003,
-    // 1004 reserved.
-    RCTSRStatusNoStatusReceived = 1005,
-    // 1004-1006 reserved.
-    RCTSRStatusCodeInvalidUTF8 = 1007,
-    RCTSRStatusCodePolicyViolated = 1008,
-    RCTSRStatusCodeMessageTooBig = 1009,
+  RCTSRStatusCodeNormal = 1000,
+  RCTSRStatusCodeGoingAway = 1001,
+  RCTSRStatusCodeProtocolError = 1002,
+  RCTSRStatusCodeUnhandledType = 1003,
+  // 1004 reserved.
+  RCTSRStatusNoStatusReceived = 1005,
+  // 1004-1006 reserved.
+  RCTSRStatusCodeInvalidUTF8 = 1007,
+  RCTSRStatusCodePolicyViolated = 1008,
+  RCTSRStatusCodeMessageTooBig = 1009,
 };
 
 @class RCTSRWebSocket;
@@ -107,6 +107,14 @@ extern NSString *const RCTSRHTTPResponseErrorKey;
 
 @end
 
+#pragma mark - RCTSRWebSocketCertificatePinningDelegate
+
+@protocol RCTSRWebSocketCertificatePinningDelegate <NSObject>
+
+- (BOOL)evaluateTrust: (SecTrustRef) serverTrust forHostname: (NSString*) hostname;
+
+@end
+
 #pragma mark - NSURLRequest (CertificateAdditions)
 
 @interface NSURLRequest (CertificateAdditions)
@@ -120,6 +128,14 @@ extern NSString *const RCTSRHTTPResponseErrorKey;
 @interface NSMutableURLRequest (CertificateAdditions)
 
 @property (nonatomic, copy) NSArray *RCTSR_SSLPinnedCertificates;
+
+@end
+
+#pragma mark - NSMutableURLRequest (CertificateAdditions)
+
+@interface NSMutableURLRequest (CertificatePinningDelegate)
+
+@property (class, nonatomic, strong) id<RCTSRWebSocketCertificatePinningDelegate> certificatePinningDelegate;
 
 @end
 
