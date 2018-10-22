@@ -9,6 +9,7 @@
  * state for TextInputs. All calls relating to the keyboard
  * should be funneled through here
  *
+ * @providesModule TextInputState
  * @format
  * @flow
  */
