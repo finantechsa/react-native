@@ -1,4 +1,10 @@
 #!/bin/bash
+#
+# Copyright (c) Facebook, Inc. and its affiliates.
+#
+# This source code is licensed under the MIT license found in the
+# LICENSE file in the root directory of this source tree.
+#
 
 set -ex
 
@@ -89,8 +95,8 @@ function e2e_suite() {
     # To make sure we actually installed the local version
     # of react-native, we will create a temp file inside the template
     # and check that it exists after `react-native init
-    IOS_MARKER="$(mktemp "$ROOT"/local-cli/templates/HelloWorld/ios/HelloWorld/XXXXXXXX)"
-    ANDROID_MARKER="$(mktemp "$ROOT"/local-cli/templates/HelloWorld/android/XXXXXXXX)"
+    IOS_MARKER="$(mktemp "$ROOT"/template/ios/HelloWorld/XXXXXXXX)"
+    ANDROID_MARKER="$(mktemp "$ROOT"/template/android/XXXXXXXX)"
 
     # install CLI
     cd react-native-cli
@@ -128,6 +134,7 @@ function e2e_suite() {
         emulator64-arm -avd "$AVD_UUID" -no-skin -no-audio -no-window -no-boot-anim &
 
         bootanim=""
+        # shellcheck disable=SC2076
         until [[ "$bootanim" =~ "stopped" ]]; do
             sleep 5
             bootanim=$(adb -e shell getprop init.svc.bootanim 2>&1)
@@ -210,15 +217,15 @@ function e2e_suite() {
       fi
 
       # kill packager process
-      if kill -0 $SERVER_PID; then
+      if kill -0 "$SERVER_PID"; then
         echo "Killing packager $SERVER_PID"
-        kill -9 $SERVER_PID
+        kill -9 "$SERVER_PID"
       fi
 
       # kill appium process
-      if kill -0 $APPIUM_PID; then
+      if kill -0 "$APPIUM_PID"; then
         echo "Killing appium $APPIUM_PID"
-        kill -9 $APPIUM_PID
+        kill -9 "$APPIUM_PID"
       fi
 
     fi

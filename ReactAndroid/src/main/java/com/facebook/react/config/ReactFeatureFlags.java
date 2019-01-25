@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 package com.facebook.react.config;
 
 /**
@@ -14,4 +21,20 @@ public class ReactFeatureFlags {
    */
   public static boolean lazilyLoadViewManagers = false;
 
+  /**
+   * Reduce the number of Java-JS interops while accessing native arrays
+   */
+  public static boolean useArrayNativeAccessor = false;
+
+  /**
+   * Reduce the number of Java-JS interops while accessing native maps
+   */
+  public static boolean useMapNativeAccessor = false;
+
+  /**
+   * Should this application use TurboModules. If yes, then any module that inherits
+   * {@link com.facebook.react.turbomodule.core.interfaces.TurboModule} will NOT be passed in to
+   * C++ CatalystInstanceImpl
+   */
+  public static boolean useTurboModules = false;
 }

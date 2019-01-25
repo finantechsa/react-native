@@ -1,11 +1,9 @@
-/*
- *  Copyright (c) Facebook, Inc. and its affiliates.
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
- *  This source code is licensed under the MIT license found in the LICENSE
- *  file in the root directory of this source tree.
- *
+ * This source code is licensed under the MIT license found in the LICENSE
+ * file in the root directory of this source tree.
  */
-
 package com.facebook.yoga;
 
 import com.facebook.proguard.annotations.DoNotStrip;
@@ -18,7 +16,7 @@ import javax.annotation.Nullable;
 public class YogaNode implements Cloneable {
 
   static {
-      YogaJNI.init();
+    SoLoader.loadLibrary("yoga");
   }
 
   /**
@@ -161,6 +159,7 @@ public class YogaNode implements Cloneable {
   }
 
   private static native void jni_YGNodeInsertChild(long nativePointer, long childPointer, int index);
+
   public void addChildAt(YogaNode child, int i) {
     if (child.mOwner != null) {
       throw new IllegalStateException("Child already has a parent, it must be removed first.");
@@ -174,15 +173,16 @@ public class YogaNode implements Cloneable {
     jni_YGNodeInsertChild(mNativePointer, child.mNativePointer, i);
   }
 
-  private static native void jni_YGNodeInsertSharedChild(long nativePointer, long childPointer, int index);
+  private static native void jni_YGNodeSetIsReferenceBaseline(long nativePointer, boolean isReferenceBaseline);
 
-  public void addSharedChildAt(YogaNode child, int i) {
-    if (mChildren == null) {
-      mChildren = new ArrayList<>(4);
-    }
-    mChildren.add(i, child);
-    child.mOwner = null;
-    jni_YGNodeInsertSharedChild(mNativePointer, child.mNativePointer, i);
+  public void setIsReferenceBaseline(boolean isReferenceBaseline) {
+    jni_YGNodeSetIsReferenceBaseline(mNativePointer, isReferenceBaseline);
+  }
+
+  private static native boolean jni_YGNodeIsReferenceBaseline(long nativePointer);
+
+  public boolean isReferenceBaseline() {
+    return jni_YGNodeIsReferenceBaseline(mNativePointer);
   }
 
   private static native void jni_YGNodeSetOwner(long nativePointer, long newOwnerNativePointer);

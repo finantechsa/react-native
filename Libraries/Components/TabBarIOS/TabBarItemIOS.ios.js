@@ -10,13 +10,11 @@
 
 'use strict';
 
-const Image = require('Image');
 const React = require('React');
 const StaticContainer = require('StaticContainer.react');
 const StyleSheet = require('StyleSheet');
 const View = require('View');
-
-const requireNativeComponent = require('requireNativeComponent');
+const RCTTabBarItemNativeComponent = require('RCTTabBarItemNativeComponent');
 
 import type {ViewProps} from 'ViewPropTypes';
 import type {ColorValue} from 'StyleSheetTypes';
@@ -104,6 +102,8 @@ type State = {|
   hasBeenSelected: boolean,
 |};
 
+let showedDeprecationWarning = false;
+
 class TabBarItemIOS extends React.Component<Props, State> {
   state = {
     hasBeenSelected: false,
@@ -121,25 +121,37 @@ class TabBarItemIOS extends React.Component<Props, State> {
     }
   }
 
+  componentDidMount() {
+    if (!showedDeprecationWarning) {
+      console.warn(
+        'TabBarIOS and TabBarItemIOS are deprecated and will be removed in a future release. ' +
+          'Please use react-native-tab-view instead.',
+      );
+
+      showedDeprecationWarning = true;
+    }
+  }
+
   render() {
     const {style, children, ...props} = this.props;
 
     // if the tab has already been shown once, always continue to show it so we
     // preserve state between tab transitions
+    let tabContents;
     if (this.state.hasBeenSelected) {
-      var tabContents = (
+      tabContents = (
         <StaticContainer shouldUpdate={this.props.selected}>
           {children}
         </StaticContainer>
       );
     } else {
-      var tabContents = <View />;
+      tabContents = <View />;
     }
 
     return (
-      <RCTTabBarItem {...props} style={[styles.tab, style]}>
+      <RCTTabBarItemNativeComponent {...props} style={[styles.tab, style]}>
         {tabContents}
-      </RCTTabBarItem>
+      </RCTTabBarItemNativeComponent>
     );
   }
 }
@@ -153,7 +165,5 @@ const styles = StyleSheet.create({
     left: 0,
   },
 });
-
-const RCTTabBarItem = requireNativeComponent('RCTTabBarItem');
 
 module.exports = TabBarItemIOS;

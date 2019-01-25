@@ -14,12 +14,10 @@ const React = require('React');
 const StyleSheet = require('StyleSheet');
 const TabBarItemIOS = require('TabBarItemIOS');
 
-const requireNativeComponent = require('requireNativeComponent');
+const RCTTabBar = require('RCTTabBarNativeComponent');
 
 import type {ViewProps} from 'ViewPropTypes';
 import type {ColorValue} from 'StyleSheetTypes';
-
-const RCTTabBar = requireNativeComponent('RCTTabBar');
 
 type Props = $ReadOnly<{|
   ...ViewProps,
@@ -68,8 +66,21 @@ type Props = $ReadOnly<{|
   itemPositioning?: ?('fill' | 'center' | 'auto'),
 |}>;
 
+let showedDeprecationWarning = false;
+
 class TabBarIOS extends React.Component<Props> {
   static Item = TabBarItemIOS;
+
+  componentDidMount() {
+    if (!showedDeprecationWarning) {
+      console.warn(
+        'TabBarIOS and TabBarItemIOS are deprecated and will be removed in a future release. ' +
+          'Please use react-native-tab-view instead.',
+      );
+
+      showedDeprecationWarning = true;
+    }
+  }
 
   render() {
     return (
