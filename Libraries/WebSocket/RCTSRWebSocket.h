@@ -46,6 +46,14 @@ extern NSString *const RCTSRHTTPResponseErrorKey;
 
 @protocol RCTSRWebSocketDelegate;
 
+#pragma mark - RCTSRWebSocketCertificatePinningDelegate
+
+@protocol RCTSRWebSocketCertificatePinningDelegate <NSObject>
+
+- (BOOL)evaluateTrust: (SecTrustRef) serverTrust forHostname: (NSString*) hostname;
+
+@end
+
 #pragma mark - RCTSRWebSocket
 
 @interface RCTSRWebSocket : NSObject <NSStreamDelegate>
@@ -120,6 +128,14 @@ extern NSString *const RCTSRHTTPResponseErrorKey;
 @interface NSMutableURLRequest (CertificateAdditions)
 
 @property (nonatomic, copy) NSArray *RCTSR_SSLPinnedCertificates;
+
+@end
+
+#pragma mark - NSMutableURLRequest (CertificateAdditions)
+
+@interface NSMutableURLRequest (CertificatePinningDelegate)
+
+@property (class, nonatomic, strong) id<RCTSRWebSocketCertificatePinningDelegate> certificatePinningDelegate;
 
 @end
 
