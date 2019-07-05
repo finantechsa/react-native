@@ -1095,6 +1095,7 @@
 		E223624420875A8000108244 /* JSExecutor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E223624320875A8000108244 /* JSExecutor.cpp */; };
 		E7711C7A2238455400FCF26D /* RCTSurfacePresenterStub.h in Headers */ = {isa = PBXBuildFile; fileRef = 589515DF2231AD9C0036BDE0 /* RCTSurfacePresenterStub.h */; };
 		E9B20B7B1B500126007A2DA7 /* RCTAccessibilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E9B20B7A1B500126007A2DA7 /* RCTAccessibilityManager.m */; };
+		EBBD251F22CF905900AA502E /* RCTSRWebSocket.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 3D7BFD2C1EA8E3FA008DFB7A /* RCTSRWebSocket.h */; };
 		EBF21BBC1FC498270052F4D5 /* InspectorInterfaces.h in Headers */ = {isa = PBXBuildFile; fileRef = EBF21BBA1FC498270052F4D5 /* InspectorInterfaces.h */; };
 		EBF21BBE1FC498630052F4D5 /* InspectorInterfaces.h in Headers */ = {isa = PBXBuildFile; fileRef = EBF21BBA1FC498270052F4D5 /* InspectorInterfaces.h */; };
 		EBF21BFB1FC498FC0052F4D5 /* InspectorInterfaces.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = EBF21BBA1FC498270052F4D5 /* InspectorInterfaces.h */; };
@@ -1540,6 +1541,7 @@
 			dstPath = include/React;
 			dstSubfolderSpec = 16;
 			files = (
+				EBBD251F22CF905900AA502E /* RCTSRWebSocket.h in Copy Headers */,
 				5C60EB5A226442950018C04F /* RCTCxxBridgeDelegate.h in Copy Headers */,
 				5C60EB57226441470018C04F /* JSCExecutorFactory.h in Copy Headers */,
 				589515E12231ADE00036BDE0 /* RCTSurfacePresenterStub.h in Copy Headers */,
