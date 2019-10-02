@@ -1299,6 +1299,19 @@ static const size_t RCTSRFrameHeaderOverhead = 32;
 - (void)stream:(NSStream *)aStream handleEvent:(NSStreamEvent)eventCode;
 {
   if (_secure && !_pinnedCertFound && (eventCode == NSStreamEventHasBytesAvailable || eventCode == NSStreamEventHasSpaceAvailable)) {
+    id<RCTSRWebSocketCertificatePinningDelegate> certificatePinningDelegate = [NSMutableURLRequest certificatePinningDelegate];
+
+    if(certificatePinningDelegate) {
+      SecTrustRef secTrust = (__bridge SecTrustRef)[aStream propertyForKey:(__bridge id)kCFStreamPropertySSLPeerTrust];
+      _pinnedCertFound = [certificatePinningDelegate evaluateTrust:secTrust forHostname:_url.host];
+
+      if (!_pinnedCertFound) {
+        dispatch_async(_workQueue, ^{
+          [self _failWithError:[NSError errorWithDomain:RCTSRWebSocketErrorDomain code:23556 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Invalid server cert"]}]];
+        });
+        return;
+      }
+    }
     NSArray *sslCerts = _urlRequest.RCTSR_SSLPinnedCertificates;
     if (sslCerts) {
       SecTrustRef secTrust = (__bridge SecTrustRef)[aStream propertyForKey:(__bridge id)kCFStreamPropertySSLPeerTrust];
@@ -1546,6 +1559,20 @@ static const size_t RCTSRFrameHeaderOverhead = 32;
 - (void)setRCTSR_SSLPinnedCertificates:(NSArray *)RCTSR_SSLPinnedCertificates;
 {
   [NSURLProtocol setProperty:RCTSR_SSLPinnedCertificates forKey:@"RCTSR_SSLPinnedCertificates" inRequest:self];
+}
+
+@end
+
+@implementation NSMutableURLRequest (CertificatePinningDelegate)
+static id<RCTSRWebSocketCertificatePinningDelegate> CertificatePinningDelegate;
+
++(id<RCTSRWebSocketCertificatePinningDelegate>) certificatePinningDelegate {
+  return CertificatePinningDelegate;
+}
+
+
++(void) setCertificatePinningDelegate: (id<RCTSRWebSocketCertificatePinningDelegate>)delegate {
+  CertificatePinningDelegate = delegate;
 }
 
 @end
