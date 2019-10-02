@@ -43,6 +43,18 @@ RCT_EXPORT_MODULE()
 
 #pragma mark - NSURLRequestHandler
 
+#ifdef ENVIRONMENT_QUA
+
+- (void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential))completionHandler
+{
+  if([challenge.protectionSpace.host isEqualToString:@"activotrader.haica.dev"] || [challenge.protectionSpace.host isEqualToString:@"mtrader.haica.dev"])
+  {
+    completionHandler(NSURLSessionAuthChallengeUseCredential, [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust]);
+  }
+}
+
+#endif
+
 - (BOOL)canHandleRequest:(NSURLRequest *)request
 {
   static NSSet<NSString *> *schemes = nil;
